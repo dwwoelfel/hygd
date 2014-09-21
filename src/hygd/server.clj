@@ -75,7 +75,9 @@
           (let [svg (-> req :form-params (get "svg"))
                 blacklist (-> req :form-params (get "blacklist") (clojure.string/split #",") (#(map (comp keyword clojure.string/trim) %)))]
             {:status 200
-             :body (with-out-str (doall (map clojure.pprint/pprint (svg->hiccup svg blacklist))))}))))
+             :body (with-out-str
+                     (binding [clojure.pprint/*print-right-margin* 100]
+                       (doall (map clojure.pprint/pprint (svg->hiccup svg blacklist)))))}))))
 
 (defn port []
   (cond (System/getenv "HTTP_PORT") (Integer/parseInt (System/getenv "HTTP_PORT"))
