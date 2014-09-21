@@ -62,7 +62,7 @@
   (GET "/" [] (fn [req]
                 {:status 200
                  :body (html5 {}
-                              [:body [:form {:method "POST" :action "/convert"}
+                              [:body [:form {:method "POST" :action "/"}
                                       [:div [:label {:for "svg"} "svg:"]]
                                       [:div [:textarea {:name "svg" :cols 100 :rows 20}]]
                                       [:br]
@@ -70,7 +70,7 @@
                                       [:div [:input {:name "blacklist" :style "width: 1000px" :type "text" :value "fill,font-family,font-size,stroke,stroke-width,stroke-linecap,stroke-miterlimit,stroke-linejoin,display"}]]
                                       [:br]
                                       [:div [:input {:type "submit" :value "Convert"}]]]])}))
-  (POST "/convert" []
+  (POST "/" []
         (fn [req]
           (let [svg (-> req :form-params (get "svg"))
                 blacklist (-> req :form-params (get "blacklist") (clojure.string/split #",") (#(map (comp keyword clojure.string/trim) %)))]
